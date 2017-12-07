@@ -1,5 +1,9 @@
 git 命令相关笔记
 
+0. 概念
+在Git中，用HEAD表示当前版本
+上一个版本就是HEAD^，上上一个版本就是HEAD^^
+当然往上100个版本，写成HEAD~100
 
 1.常用命令：
 git init
@@ -10,6 +14,8 @@ git diff
 git push
 git log 
     查看历史纪录
+git log --pretty=oneline 
+
 
 2. 版本退回
 2.1 没有add
