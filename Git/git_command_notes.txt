@@ -28,6 +28,9 @@ git log --pretty=oneline
 git log --graph --pretty=oneline --abbrev-commit
 git reflog 查看log 包括退回版本ID
 
+git remote
+git remote -v
+
 
 
 
@@ -62,12 +65,15 @@ HEAD ---> master
 		git branch newbranchname
 		git checkout newbranchname
 		git branch -d newbranchname
-		
+		git branch -D newbranchname  强行删除一个分支 
 		合并某分支到当前分支：
 		git merge <name>
+        加上--no-ff参数就可以用普通模式合并
+  
+4.   临时存储工作现场
+      git stash
+      git stash list
+      git pop
 
-
-add in master branch
-
-add in feature1 branch.
+      一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除； 另一种方式是用git stash pop，恢复的同时把stash内容也删了
 
