@@ -25,6 +25,7 @@ git push -u origin master
 git log 
     查看历史纪录
 git log --pretty=oneline 
+git log --graph --pretty=oneline --abbrev-commit
 git reflog 查看log 包括退回版本ID
 
 
