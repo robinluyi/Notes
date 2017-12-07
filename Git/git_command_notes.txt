@@ -15,13 +15,15 @@ git push
 git log 
     查看历史纪录
 git log --pretty=oneline 
-
+git reflog 查看log 包括退回版本ID
 
 2. 版本退回
 2.1 没有add
 	
 2.2 已经add 没有commit
 git reset --hard HEAD^
+git reset --hard 3628164
+
 --hard参数有啥意义？
 
 
