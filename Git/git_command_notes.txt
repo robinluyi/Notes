@@ -61,3 +61,6 @@ HEAD ---> master
 		git branch newbranchname
 		git checkout newbranchname
 		git branch -d newbranchname
+		
+		合并某分支到当前分支：
+		git merge <name>
