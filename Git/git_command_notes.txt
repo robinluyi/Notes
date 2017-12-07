@@ -30,7 +30,8 @@ git reflog 查看log 包括退回版本ID
 
 git remote
 git remote -v
-
+git remote rm origin
+git remote add origin git@gitee.com:liaoxuefeng/learngit.git
 
 
 
@@ -100,5 +101,36 @@ HEAD ---> master
 	    git push origin v1.0
 	    git push origin --tags
 
+6. 与远程开源仓库合作：
+ 6.1 Fork到自己到仓库
+ 6.2 clone自己到项目
+ 6.3 提交pull request
+	git remote add github git@github.com:michaelliao/learngit.git
+	git remote add gitee git@gitee.com:liaoxuefeng/learngit.git
+	git push github master
+	git push gitee master
+
+7.
+	.gitignore文件
+	https://github.com/github/gitignore
+	配置别名
+	git config --global alias.st status
+	git st
+	git config --global alias.co checkout
+	git config --global alias.ci commit
+	git config --global alias.br branch
+	git config --global alias.unstage 'reset HEAD'
+	git config --global alias.last 'log -1'
+	git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 
+配置文件
+
+	配置Git的时候，加上--global是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。
+
+	配置文件放哪了？
+		每个仓库的Git配置文件都放在.git/config文件中：
+
+
+
+---------
