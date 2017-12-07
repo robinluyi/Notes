@@ -1,0 +1,20 @@
+git 命令相关笔记
+
+
+1.常用命令：
+git init
+
+git add
+git commit -m 'message'
+git diff 
+git push
+
+2. 版本退回
+2.1 没有add
+	
+2.2 已经add 没有commit
+
+2.3 已经commit 没有push
+
+2.4 已经push
+
