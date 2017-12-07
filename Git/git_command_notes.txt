@@ -19,6 +19,9 @@ git commit -m 'message'
 git diff readme.txt
 git diff HEAD -- readme.txt
 git push
+git push origin master
+git push -u origin master
+
 git log 
     查看历史纪录
 git log --pretty=oneline 
