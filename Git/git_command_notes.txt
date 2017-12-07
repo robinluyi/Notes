@@ -69,7 +69,13 @@ HEAD ---> master
 		合并某分支到当前分支：
 		git merge <name>
         加上--no-ff参数就可以用普通模式合并
-  
+    clone一个项目 然后切换到分支 注册
+    git clone xx
+    git checkout -b dev origin/dev
+    git pull <remote> <branch>
+    或者
+	git branch --set-upstream dev origin
+
 4.   临时存储工作现场
       git stash
       git stash list
