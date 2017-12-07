@@ -83,3 +83,22 @@ HEAD ---> master
 
       一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除； 另一种方式是用git stash pop，恢复的同时把stash内容也删了
 
+5. 打一个tag  让版本号好记
+		git tag v1.0
+		git tag
+	查找历史提交打tag
+	    	
+		git tag v0.9 6224937
+	查看标签信息
+ 		git show <tagname>
+	给tag加注释
+		git tag -a v0.1 -m "version 0.1 released" 3628164
+	删除tag
+		git tag -d v0.1
+		git push origin :refs/tags/v0.1  （删除远程的tag）
+	推送某个标签到远程
+	    git push origin v1.0
+	    git push origin --tags
+
+
+
