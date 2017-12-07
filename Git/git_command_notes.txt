@@ -27,6 +27,9 @@ git log
 git log --pretty=oneline 
 git reflog 查看log 包括退回版本ID
 
+
+
+
 2. 版本退回
 2.1 没有add
 	git checkout -- readme.txt
@@ -46,4 +49,15 @@ git reflog 查看log 包括退回版本ID
 2.4 已经push
 
 
+3. 远程分支
+HEAD ---> master
+		我们创建dev分支，然后切换到dev分支：
+	git checkout -b dev
+		-b参数表示创建并切换 相当于
+		git branch dev
+		git checkout dev
 
+		git branch
+		git branch newbranchname
+		git checkout newbranchname
+		git branch -d newbranchname
