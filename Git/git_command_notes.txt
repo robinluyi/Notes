@@ -26,15 +26,21 @@ git reflog 查看log 包括退回版本ID
 
 2. 版本退回
 2.1 没有add
-	
-2.2 已经add 没有commit
-git reset --hard HEAD^
-git reset --hard 3628164
+	git checkout -- readme.txt
+	--很重要，没有--，就变成了“切换到另一个分支”的命令
 
---hard参数有啥意义？
+2.2 已经add 没有commit
+
+	git reset HEAD readme.txt
 
 
 2.3 已经commit 没有push
+	git reset --hard HEAD^
+	git reset --hard 3628164
+	hard 什么意思？
+
 
 2.4 已经push
+
+
 
