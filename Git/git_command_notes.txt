@@ -8,6 +8,8 @@ git add
 git commit -m 'message'
 git diff 
 git push
+git log 
+    查看历史纪录
 
 2. 版本退回
 2.1 没有add
