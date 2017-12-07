@@ -64,3 +64,13 @@ HEAD ---> master
 		
 		合并某分支到当前分支：
 		git merge <name>
+
+
+
+
+
+
+
+add in feature1 branch.
+
+
