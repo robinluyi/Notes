@@ -52,7 +52,7 @@ git remote add origin git@gitee.com:liaoxuefeng/learngit.git
 
 
 2.4 已经push
-
+git push upstream branch --force
 
 3. 远程分支
 HEAD ---> master
@@ -133,4 +133,8 @@ HEAD ---> master
 
 
 
----------ddddd
+using sublime
+
+Ctrl + Shift + P 调起命令面板，输入 ga，选择 Git::Add Current File，将 README.md 文件提交至暂存区JavaScript
+Ctrl + Shift + P 调起命令面板，输入 gc，选择 Git::Commit，将 README.md 文件提交至版本库，这时会弹出提交日志的文件，首行输入此次更新的内容和目的，关闭该文件即可
+Ctrl + Shift + P 调起命令面板，输入 gp，选择 Git::Push

@@ -1,0 +1,49 @@
+ SqlMapConfig.xml
+
+ SqlSessionFactoryBuilder 根据 SqlMapConfig.xml生成SqlSessionFactory
+ SqlSessionFactory --单例 用于生成 SqlSession 
+ SqlSession  --操作数据库对象   作用范围：函数体内变量。 线程不安全
+ Executor.   --真正干活的对象 内部有一个currentSql变量  一个默认 一个缓存  
+ MappedStatement  --封装SQL
+
+
+Mapper xml 文件里面 定义的每个查询会封装成一个MappedStatement
+#{}：表示 一个占位符，可以自动JAVA类型转换，字符串两端添加单引号   如果#{}中传入简单类型的参数，#{}中的名称随意  
+${}：表示sql的拼接，通过${}接收参数，将参数的内容不加任何修饰拼接在sql中
+sql 不能在结尾添加分号；
+
+#{} ${} 都可以解析pojo的属性值 （ONGL ）
+
+
+mapper 代理
+原理：
+1.根据配置文件找到mapper和代理对象。
+
+
+1. 表名+mapper.xml 文件的namespace指定为mapper接口（也就是DAO 接口）的全限定名 （qualified name）。 目的是讲mapper.xml 和mapper.java相关联。
+<mapper namespace="cn.itcast.mybatis.mapper.UserMapper">
+
+2. statement的ID 就是方法名 , parameterType就是参数，resultType就是返回类型。保持一致
+public class UserMapper{
+public User findUserById（int id）;
+}
+<select id="findUserById" parameterType="int" resultType="cn.itcast.mybatis.mapper.User" >
+对于多行查询 可以用List<User>作为函数返回值。
+
+3.将mapper.xml写入SqlMapConfig.xml
+<mapper resource="mapper/UserMapper.xml" /> 
+或
+<package name="cn.itcast.mybatis.mapper" /> 要求mapper.xml 与mapper.java 同名并在同一文件夹。
+
+4.使用：
+UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+User user = userMapper.findUserById(1);
+
+
+
+其他配置：
+    <!-- 属性定义 加载一个properties文件 在 properties标签 中配置属性值 -->
+	<properties resource="db.properties">
+		<!-- <property name="" value=""/> -->
+	</properties>
+

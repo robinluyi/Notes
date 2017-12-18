@@ -1,0 +1,417 @@
+
+我的Maven POM配置
+
+刚刚把项目从Ant转到Maven，费了好多劲，主要是对Maven边用边学。问题主要集中在项目结构上不太一样，在程序的访问上也有区别，调试和打包等也和原来不太一样。终于折腾完一个可以正常运行的POM配置，记录一下，将遇到的问题也注释在了配置中，便于查阅。
+复制代码
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.garfield.gserver</groupId>
+    <artifactId>GServer</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.0-beta9</version>
+        </dependency>
+
+        <!-- 
+        ERROR Root contains an invalid element or attribute "AppenderRef"
+        This is an error for 2.0-beta8, it is not present on 2.0-beta9
+         -->
+        
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.0-beta9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>2.0-rc1</version>
+        </dependency>
+            
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.0-rc1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.5.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>4.0.3.RELEASE</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.0.3.RELEASE</version>
+
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>4.0.3.RELEASE</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>4.0.3.RELEASE</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.0.3.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.0.3.RELEASE</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.0.3.RELEASE</version>
+        </dependency>
+
+        <!-- json-lib是需要区分jdk版本的，pom.xml中的配置应加上<classifier>标签，如用jdk15： -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5-pre8</version>
+        </dependency>
+
+        
+            
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+
+
+        <!-- maven打包编译的异常 ：sun.misc.BASE64Decoder 是 Sun 的专用 API，可能会在未来版本中删除的解决方法 -->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-javac</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+
+
+        <!-- maven工程 仓库没有的jar使用方法 <dependency> <groupId>cryptix</groupId> <artifactId>cryptix-jce-api</artifactId> 
+            <version>1.0</version> <scope>system</scope> <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/cryptix-jce-api.jar</systemPath> 
+            </dependency> -->
+
+        <!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-core</artifactId> 
+            <version>2.0-rc1</version> </dependency> -->
+
+    </dependencies>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <defaultGoal>compile</defaultGoal>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>  <!-- “编码 GBK 的不可映射字符”问题的解决 -->
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <!--不写匹配默认规则,TestSuit结尾，test开头的方法  -->
+                        <include>**/*TestSuit.java</include>   <!-- 两个星号**用来匹配任意路径，一个星号*用来获取除路径风格符外的0个或多个字符 -->
+                    </includes>
+                    <excludes>
+                        <exclude>**/CollectionBillTestCase.java</exclude>
+                        <exclude>**/PaymentBillTestCase.java</exclude>
+                    </excludes>
+                    <skip>false</skip>  <!-- 略过单元测试 -->
+                    <testFailureIgnore>true</testFailureIgnore> <!-- 当Maven 遇到一个测试失败，它默认的行为是停止当前的构建。 如果你希望继续构建项目，即使 Surefire 插件遇到了失败的单元测试，你就需要设置 Surefire 的testFailureIgnore 这个配置属性为 true -->
+                </configuration>
+            </plugin>
+
+            
+            <!-- 把依赖的jar包拷到lib目录下 -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+                        
+            <!-- 把配置文件拷到和jar包同一个路径下 -->
+            <!-- 以utf-8编码拷贝配置文件，拷贝过程中是可以做变量替换的，也就是说你的配置文件可以是个模板，里面的${}所包含的内容是可以拷贝过程中替换的 -->
+            <!-- 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+             -->
+            <!-- 打jar包时需要把配置文件给排除在外 -->
+            <!-- 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>lib/</classpathPrefix>
+                                    <mainClass>com.garfield.gui.Main</mainClass>
+                                </manifest>
+                            </archive>
+                            <classifier>lib</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+              -->   
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>  <!-- 在jar包中增加依赖jar路径说明 -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.garfield.gui.Main</mainClass>
+                        </manifest>
+                        
+                        <!-- 用maven在MANIFEST.MF资料中的Class-Path中增加当前目录(.)  -->
+                        <manifestEntries>
+                           <Class-Path>.</Class-Path>
+                        </manifestEntries>
+                        
+                    </archive>
+                </configuration>
+            </plugin>
+             
+            <!-- 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                  <descriptors>
+                    <descriptor>/assembly.xml</descriptor>
+                  </descriptors>
+                </configuration>
+                <executions>
+                  <execution>
+                    <id>make-assembly</id>
+                    <phase>package</phase>
+                    <goals>
+                      <goal>single</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+             -->
+        </plugins>
+        
+        
+        <!-- POM文件报错maven-dependency-plugin (goals "copy-dependencies", "unpack") is not supported by m2e.， 
+        在</build>标签前添加如下内容  -->
+        
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>[2.0,)</versionRange>
+                                        <goals>
+                                            <goal>copy-dependencies</goal>
+                                            <goal>unpack</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        
+        
+        <resources>
+            <!--打包进XML等文件，排除java及版本控制文件  -->
+            <resource>
+                 <directory>src/main/java</directory>
+                <excludes>
+                     <exclude>**/*.java</exclude>
+                     <exclude>**/.svn/*</exclude>
+                 </excludes>
+             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>
+
+复制代码
+1
+	
+<span style="font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5;">如果使用assembly编译，则用到下面的assembly.xml:</span>
+复制代码
+
+<assembly>
+    <id>bin</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <includeBaseDirectory>true</includeBaseDirectory>
+
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <fileSet>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>README.txt</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/java</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>hibernate.cfg.xml</include>
+                <include>jserver.properties</include>
+                <include>log4j.properties</include>
+                <include>log4j2.xml</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

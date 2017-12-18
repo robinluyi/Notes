@@ -1,0 +1,31 @@
+run my sql in Docker
+
+
+# run a server:
+docker run --name robin-mysql -e MYSQL_ROOT_PASSWORD=root -p3306:3306 -d mysql
+
+# check the IP (and port 3306):
+docker ps
+docker inspect 7a1400622109 | grep IPAddress
+
+
+# run a client in another docker instance:
+docker run -it --link robin-mysql:mysql --rm mysql sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+
+
+
+#test
+
+mysql> 
+mysql> create database if not exists test default charset utf8 collate utf8_general_ci;
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.00 sec)
+

@@ -1,0 +1,19 @@
+package javamailapitest;
+
+import java.util.Map.Entry;
+import java.util.Properties;
+
+public class Prop {
+public static void main(String[] args) throws Exception {
+	Properties props = System.getProperties();
+	for(Entry<Object, Object> en:props.entrySet()){
+		System.out.println(en.getKey()+"    -     " + en.getValue());
+	}
+	
+	Properties properties = new Properties();
+	properties.load(Prop.class.getClassLoader().getResourceAsStream("db.property"));
+	for(Entry<Object, Object> en:properties.entrySet()){
+		System.out.println(en.getKey()+"    -     " + en.getValue());
+	}
+}
+}
