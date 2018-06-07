@@ -22,7 +22,7 @@ git push
 git push origin master
 git push -u origin master
 
-git log 
+git log diff
     查看历史纪录
 git log --pretty=oneline 
 git log --graph --pretty=oneline --abbrev-commit
@@ -58,6 +58,7 @@ git push upstream branch --force
 HEAD ---> master
 		我们创建dev分支，然后切换到dev分支：
 	git checkout -b dev
+	git checkout -b forRollBack
 		-b参数表示创建并切换 相当于
 		git branch dev
 		git checkout dev
@@ -66,9 +67,10 @@ HEAD ---> master
 		git branch newbranchname
 		git checkout newbranchname
 		git branch -d newbranchname
-		git branch -D newbranchname  强行删除一个分支 
+		git branch -D newbranchname  强行删除一个分支 git branch -D forRollBack
+		
 		合并某分支到当前分支：
-		git merge <name>
+		git merge <merge>
         加上--no-ff参数就可以用普通模式合并
     clone一个项目 然后切换到分支 注册
     git clone xx
@@ -115,13 +117,19 @@ HEAD ---> master
 	https://github.com/github/gitignore
 	配置别名
 	git config --global alias.st status
-	git st
 	git config --global alias.co checkout
 	git config --global alias.ci commit
 	git config --global alias.br branch
 	git config --global alias.unstage 'reset HEAD'
 	git config --global alias.last 'log -1'
 	git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+8.  git删除文件
+
+	git rm $(git ls-files --deleted)
+	git add $(git ls-files --modified)
+
+
 
 
 配置文件

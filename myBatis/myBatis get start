@@ -47,3 +47,28 @@ User user = userMapper.findUserById(1);
 		<!-- <property name="" value=""/> -->
 	</properties>
 
+注意： MyBatis 将按照下面的顺序来加载属性：
+υ	在 properties 元素体内定义的属性首先被读取。  例如测试环境参数
+υ	然后会读取properties 元素中resource或 url 加载的属性，它会覆盖已读取的同名属性。  例如部署到各环境后cp来到的参数文件
+υ	最后读取parameterType传递的属性，它会覆盖已读取的同名属性。例如运行时传入的变量。
+
+建议使用properties，不要在properties中定义属性，只引用定义的properties文件中属性，并且properties文件中定义的key要有一些特殊的规则。
+
+
+sql 片段 - 可复用的sql片段
+定义：<sql id="query_user_where">
+使用：<include refid="query_user_where"></include>
+
+mybatis sql 日志输出
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+一对多查询： 
+resultMap
+association 一对一
+collection  一对多
+
+缓存  一级 sqlSession 内部
+     二级 垮sqlSession
+

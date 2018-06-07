@@ -2,7 +2,7 @@ run my sql in Docker
 
 
 # run a server:
-docker run --name robin-mysql -e MYSQL_ROOT_PASSWORD=root -p3306:3306 -d mysql
+docker run --name robin-mysql -v /home/mysqldatadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -p3306:3306 -d mysql
 
 # check the IP (and port 3306):
 docker ps
