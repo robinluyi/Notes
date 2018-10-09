@@ -1,0 +1,8 @@
+O:\IBM\WCDE80\components\foundation\subcomponents\search\bin>call setupSearchIndex.bat -masterCatalogId 10101
+
+
+call setupSearchpreprocessIndex.bat -masterCatalogId 10101
+call di-.bat O:/IBM/WCDE80/search/pre-processConfig/MC_10101/Cloudscape
+startWCServer.bat
+call di-buildindex.bat -masterCatalogId 10101
+stopWCServer.bat

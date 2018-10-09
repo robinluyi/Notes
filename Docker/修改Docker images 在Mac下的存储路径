@@ -1,0 +1,7 @@
+修改Docker images 在Mac下的存储路径
+
+docker --> preferences --> disk --> move disk image
+
+you can also resize the max image size here.
+
+

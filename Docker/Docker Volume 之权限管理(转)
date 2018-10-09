@@ -1,0 +1,144 @@
+Docker Volume 之权限管理(转)
+https://www.cnblogs.com/jackluo/p/5783116.html
+
+
+Volume数据卷是Docker的一个重要概念。数据卷是可供一个或多个容器使用的特殊目录，可以为容器应用存储提供有价值的特性：
+
+持久化数据与容器的生命周期解耦：在容器删除之后数据卷中的内容可以保持。Docker 1.9之后引进的named volume（命名文件卷）可以更加方便地管理数据卷的生命周期；数据卷可以被独立地创建和删除。
+数据卷可以用于实现容器之间的数据共享
+可以支持不同类型的数据存储实现
+Docker缺省提供了对宿主机本地文件卷的支持，可以将宿主机的目录挂载到容器之中。由于没有容器分层文件系统带来的性能损失，本地文件卷非常适合一些需要高性能数据访问的场景，比如MySQL的数据库文件的存储。同时Docker支持通过volume plugin实现不同类型的数据卷，可以更加灵活解决不同应用负载的存储需求。比如在阿里云容器服务中可以为容器提供基于云盘的块存储、基于OSSFS和NAS/NFS的共享文件存储。
+
+然而Docker数据卷的权限管理经常是非常令人困惑的。本文将结合实例给大家介绍Docker数据卷权限管理中的常见问题和解决方法。
+
+从Jenkins挂载本地数据卷错误谈起
+
+最近的一个同事在利用容器运行Jenkins时遇到一个问题，其复现步骤如下：
+
+注：如果是Windows/Mac需要登录到Boot2docker虚拟机之上，而Linux无需如此。
+
+docker-machine ssh default
+启动Jenkins官方镜像，并检查日志
+
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins jenkins
+docker logs jenkins
+我们可以发现"jenkins"容器日志显示结果一切正常
+
+然而为了持久化Jenkins配置数据，当我们把宿主机当前目录下的data文件夹挂载到容器中的目录"/var/jenkins_home"的时候，问题出现了：
+
+docker rm -f jenkins
+docker run -d -p 8080:8080 -p 50000:50000 -v $(pwd)/data:/var/jenkins_home --name jenkins jenkins
+docker logs jenkins
+错误日志如下
+
+touch: cannot touch ‘/var/jenkins_home/copy_reference_file.log’: Permission denied
+Can not write to /var/jenkins_home/copy_reference_file.log. Wrong volume permissions?
+这是神马情况？
+
+我们检查一下之前启动方式的"/var/jenkins_home"目录权限，查看Jenkins容器的当前用户: 当前用户是"jenkins"而且"/var/jenkins_home"目录是属于jenkins用户拥有的
+
+复制代码
+docker@default:~$ docker run -ti --rm --entrypoint="/bin/bash" jenkins -c "whoami && id"
+jenkins
+uid=1000(jenkins) gid=1000(jenkins) groups=1000(jenkins)
+
+docker@default:~$ docker run -ti --rm --entrypoint="/bin/bash" jenkins -c "ls -la /var/jenkins_home"
+total 20
+drwxr-xr-x  2 jenkins jenkins 4096 Jun  5 08:39 .
+drwxr-xr-x 28 root    root    4096 May 24 16:43 ..
+-rw-r--r--  1 jenkins jenkins  220 Nov 12  2014 .bash_logout
+-rw-r--r--  1 jenkins jenkins 3515 Nov 12  2014 .bashrc
+-rw-r--r--  1 jenkins jenkins  675 Nov 12  2014 .profile
+复制代码
+而当映射本地数据卷时，/var/jenkins_home目录的拥有者变成了root用户
+
+docker run -ti --rm -v $(pwd)/data:/var/jenkins_home --entrypoint="/bin/bash" jenkins -c "ls -la /var/jenkins_home"
+total 4
+drwxr-sr-x  2 root staff   40 Jun  5 08:32 .
+drwxr-xr-x 28 root root  4096 May 24 16:43 ..
+这就解释了为什么当"jenkins"用户的进程访问"/var/jenkins_home"目录时，会出现 Permission denied 的问题
+
+我们再检查一下宿主机上的数据卷目录，当前路径下"data"目录的拥有者是"root"，这是因为这个目录是Docker进程缺省创建出来的。
+docker@default:~$ ls -la data
+total 0
+drwxr-sr-x    2 root     staff           40 Jun  5 08:32 ./
+drwxr-sr-x    5 docker   staff          160 Jun  5 08:32 ../
+发现问题之后，相应的解决方法也很简单：把当前目录的拥有者赋值给uid 1000，再启动"jenkins"容器就一切正常了。
+
+ 
+
+sudo chown -R 1000 data
+docker start jenkins
+这时利用浏览器访问 "http://192.168.99.100:8080/" 就可以看到Jenkins的Web界面了。注：如无法访问，可能需要通过docker-machine ip命令获得当前Docker宿主机的IP地址。
+
+当我们再进入容器内部查看"/var/jenkins_home"目录的权限，其拥有者已经变成 "jenkins"
+
+复制代码
+docker@default:~$ docker exec jenkins ls -la /var/jenkins_home
+total 24
+drwxr-sr-x 11 jenkins staff  340 Jun  5 09:00 .
+drwxr-xr-x 28 root    root  4096 May 24 16:43 ..
+drwxr-sr-x  3 jenkins staff   60 Jun  5 08:59 .java
+-rw-r--r--  1 jenkins staff  289 Jun  5 08:59 copy_reference_file.log
+...
+复制代码
+而有趣的是在宿主机上我们看到的 "data"目录的拥有者是"docker"，这是因为"docker"用户在"boot2docker"宿主机上的uid也是"1000"。
+
+docker@default:~$ ls -la data
+total 20
+drwxr-sr-x    2 docker   staff           40 Jun  5 11:55 ./
+drwxr-sr-x    6 docker   staff          180 Jun  5 11:55 ../
+...
+复制代码
+这时我们已经可以知道：容器的本地数据卷中文件/目录的权限是和宿主机上一致的，只是uid/gid在Docker容器和宿主机中可能映射为不同的用户/组名称。
+
+在上文，我们使用了一个常见的技巧，即在宿主机上执行chown命令时采用了uid而不是具体的用户名，这样就可以保证设置正确的拥有者。
+
+问题虽然解决了，但思考并没有结束。因为当使用本地数据卷时，Jenkins容器会依赖宿主机目录权限的正确性，这会给自动化部署带来额外的工作。有没有方法让Jenkins容器为数据卷自动地设置正确的权限呢？这个问题对很多以non-root方式运行的应用也都有借鉴意义。
+
+为non-root应用正确地挂载本地数据卷
+我们可以从万能的stackoverflow.com找到很多相关的讨论，其中一个非常有借鉴意义问答如下
+
+http://stackoverflow.com/questions/23544282/what-is-the-best-way-to-manage-permissions-for-docker-shared-volumes
+
+其中的基本思路有两个：
+
+一个是利用Data Container的方法在容器间共享数据卷。这样就规避了解决宿主机上数据卷的权限问题。由于在1.9版本之后，Docker提供了named volume来取代纯数据容器，我们还需要真正地解决这个问题。
+另外一个思路就是让容器中以root用户启动，在容器启动脚本中利用"chown"命令来修正数据卷文件权限，之后切换到non-root用户来执行程序
+我们来参照第二个思路来解决这个问题
+
+下面是一个基于Jenkins镜像的Dockerfile：它会切换到"root"用户并在镜像中添加"gosu"命令，和新的入口点"/entrypoint.sh"
+复制代码
+复制代码
+FROM jenkins:latest
+USER root
+RUN GOSU_SHA=5ec5d23079e94aea5f7ed92ee8a1a34bbf64c2d4053dadf383992908a2f9dc8a \
+  && curl -sSL -o /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.9/gosu-$(dpkg --print-architecture)" \
+  && chmod +x /usr/local/bin/gosu \
+  && echo "$GOSU_SHA  /usr/local/bin/gosu" | sha256sum -c - 
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+复制代码
+注释：gosu 是经常出现在官方Docker镜像中的一个小工具。它是"su"和"sudo"命令的轻量级替代品，并解决了它们在tty和信号传递中的一些问题。
+
+新入口点的"entrypoint.sh"的内容如下：它会为"JENKINS_HOME"目录设置"jenkins"的拥有权限，并且再利用"gosu"命令切换到"jenkins"用户来执行"jenkins"应用。
+
+#! /bin/bash
+set -e
+chown -R 1000 "$JENKINS_HOME"
+exec gosu jenkins /bin/tini -- /usr/local/bin/jenkins.sh
+您可以直接从 https://github.com/denverdino/docker-jenkins 获得相关代码，并构建自己的Jenkins镜像。执行命令如下：
+
+ 
+
+git clone https://github.com/AliyunContainerService/docker-jenkins
+cd docker-jenkins/jenkins
+docker build -t denverdino/jenkins .
+然后基于新镜像启动Jenkins容器
+
+docker rm -f jenkins
+docker run -d -p 8080:8080 -p 50000:50000 -v $(pwd)/data:/var/jenkins_home --name jenkins denverdino/jenkins
+总结
+
+本文介绍了Docker数据卷的基本概念。针对non-root进程访问本地数据卷出现的权限问题，我们给出了一个解决方案。我们计划在未来为大家继续总结在Docker数据卷上遇到的一些其他问题，
+

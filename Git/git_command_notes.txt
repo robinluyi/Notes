@@ -130,6 +130,24 @@ HEAD ---> master
 	git add $(git ls-files --modified)
 
 
+9. git 撤销某个commit
+       git revert HEAD~1
+       git revert 848d89f
+       git revert -m 1 848d89f
+
+
+10 。 直接revert一次merge提交：
+
+git revert f67024f9df95bb8fb01228ce596e7c33ccef1753 -m 1
+	$ git log HEAD~1 -1
+	commit 137ea95c911633d3e908f6906e3adf6372cfb0ad
+	Merge: 5f576a9... 62db4af...
+	Author: Nick Quaranto <nick@quaran.to>
+	Date:   Mon Mar 16 16:22:37 2009 -0400
+	Merging in rails-2.3 branch
+	如果使用git revert HEAD~1 -m 1命令，也就是5f576a9，使用-m 2会revert第二个commit，也就是62db4af。
+
+
 
 
 配置文件
@@ -138,7 +156,6 @@ HEAD ---> master
 
 	配置文件放哪了？
 		每个仓库的Git配置文件都放在.git/config文件中：
-
 
 
 using sublime

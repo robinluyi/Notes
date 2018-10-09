@@ -1,0 +1,14 @@
+run Jenkins in Docker
+
+docker run -p 8080:8080 -p 50000:50000 -v /home/jenkinsdata:/var/jenkins_home jenkins
+
+
+You can also use a volume container:
+
+docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /var/jenkins_home jenkins
+
+
+
+
+
+a7ed82b1389440428039454bda0f0728

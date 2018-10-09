@@ -1,0 +1,20 @@
+docker run -it --name="test1" ubuntu:16.04 
+
+sudo docker run -i -t  --name="db2inst1" -p 50000:50000 db2orgstore:v1
+
+./create_database_db2.sh devlocal db2inst1 db2inst1 wcsdb
+
+
+
+
+ 
+
+docker exec -it ded /bin/bash 
+db2start
+exit
+
+
+#docker run  --privileged=true --name="db2inst1" -p 50000:50000 db2orgstore:v3 tail -F /home/db2inst1/sqllib/db2dump/db2diag.log 
+
+
+docker run -d  --name="db2inst1" -p 50001:50000 v9db:0.1

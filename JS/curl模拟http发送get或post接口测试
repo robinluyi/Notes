@@ -1,0 +1,109 @@
+ curl模拟http发送get或post接口测试
+
+可参照：http://www.voidcn.com/blog/Vindra/article/p-4917667.html
+
+一、get请求 
+
+curl "http://www.baidu.com"  如果这里的URL指向的是一个文件或者一幅图都可以直接下载到本地
+
+curl -i "http://www.baidu.com"  显示全部信息
+
+curl -l "http://www.baidu.com" 只显示头部信息
+
+curl -v "http://www.baidu.com" 显示get请求全过程解析
+
+ 
+
+wget "http://www.baidu.com"也可以
+
+ 
+
+二、post请求
+
+curl -d "param1=value1&param2=value2" "http://www.baidu.com"
+
+ 
+
+三、json格式的post请求
+
+curl -l -H "Content-type: application/json" -X POST -d '{"phone":"13521389587","password":"test"}' http://domain/apis/users.json
+
+例如：
+
+curl -l -H "Content-type: application/json" -X POST -d '{"ver": "1.0","soa":{"req":"123"},"iface":"me.ele.lpdinfra.prediction.service.PredictionService","method":"restaurant_make_order_time","args":{"arg2":"\"stable\"","arg1":"{\"code\":[\"WIND\"],\"temperature\":11.11}","arg0":"{\"tracking_id\":\"100000000331770936\",\"eleme_order_id\":\"100000000331770936\",\"platform_id\":\"4\",\"restaurant_id\":\"482571\",\"dish_num\":1,\"dish_info\":[{\"entity_id\":142547763,\"quantity\":1,\"category_id\":1,\"dish_name\":\"[0xe7][0x89][0xb9][0xe4][0xbb][0xb7][0xe8][0x85][0x8a][0xe5][0x91][0xb3][0xe5][0x8f][0x89][0xe7][0x83][0xa7][0xe5][0x8f][0x8c][0xe6][0x8b][0xbc][0xe7][0x85][0xb2][0xe4][0xbb][0x94][0xe9][0xa5][0xad]\",\"price\":31.0}],\"merchant_location\":{\"longitude\":\"121.47831425\",\"latitude\":\"31.27576153\"},\"customer_location\":{\"longitude\":\"121.47831425\",\"latitude\":\"31.27576153\"},\"created_at\":1477896550,\"confirmed_at\":1477896550,\"dishes_total_price\":0.0,\"food_boxes_total_price\":2.0,\"delivery_total_price\":2.0,\"pay_amount\":35.0,\"city_id\":\"1\"}"}}' http://vpcb-lpdinfra-stream-1.vm.elenet.me:8989/rpc
+
+ps：json串内层参数需要格式化
+
+
+
+
+1. linux curl抓取网页：
+
+抓取百度：
+curl http://www.baidu.com
+
+如发现乱码，可以使用iconv转码：
+curl http://iframe.ip138.com/ic.asp|iconv -fgb2312
+iconv的用法请参阅：在Linux/Unix系统下用iconv命令处理文本文件中文乱码问题
+
+2. Linux curl使用代理：
+
+linux curl使用http代理抓取页面：
+curl -x 111.95.243.36:80 http://iframe.ip138.com/ic.asp|iconv -fgb2312
+curl -x 111.95.243.36:80 -U aiezu:password http://www.baidu.com
+
+使用socks代理抓取页面：
+curl --socks4 202.113.65.229:443 http://iframe.ip138.com/ic.asp|iconv -fgb2312
+curl --socks5 202.113.65.229:443 http://iframe.ip138.com/ic.asp|iconv -fgb2312
+
+代理服务器地址可以从爬虫代理上获取。
+
+3. linux curl处理cookies
+
+接收cookies:
+curl -c /tmp/cookies http://www.baidu.com #cookies保存到/tmp/cookies文件
+
+发送cookies:
+curl -b "key1=val1;key2=val2;" http://www.baidu.com #发送cookies文本
+curl -b /tmp/cookies http://www.baidu.com #从文件中读取cookies
+
+4. linux curl发送数据：
+
+linux curl get方式提交数据：
+curl -G -d "name=value&name2=value2" http://www.baidu.com
+
+linux curl post方式提交数据：
+curl -d "name=value&name2=value2" http://www.baidu.com #post数据
+curl -d a=b&c=d&txt@/tmp/txt http://www.baidu.com #post文件
+
+以表单的方式上传文件：
+curl -F file=@/tmp/me.txt http://www.aiezu.com
+
+相当于设置form表单的method="POST"和enctype='multipart/form-data'两个属性。
+
+5. linux curl http header处理：
+
+设置http请求头信息：
+curl -A "Mozilla/5.0 Firefox/21.0" http://www.baidu.com #设置http请求头User-Agent
+curl -e "http://pachong.org/" http://www.baidu.com #设置http请求头Referer
+curl -H "Connection:keep-alive \n User-Agent: Mozilla/5.0" http://www.aiezu.com
+
+设置http响应头处理：
+curl -I http://www.aiezu.com #仅仅返回header
+curl -D /tmp/header http://www.aiezu.com #将http header保存到/tmp/header文件
+
+6. linux curl认证：
+
+curl -u aiezu:password http://www.aiezu.com #用户名密码认证
+curl -E mycert.pem https://www.baidu.com #采用证书认证
+
+7. 其他：
+
+curl -# http://www.baidu.com #以“#”号输出进度条
+curl -o /tmp/aiezu http://www.baidu.com #保存http响应到/tmp/aiezu
+
+8. 经验
+linux 使用curl小经验教训：
+http请求地址的url要使用""括起来。当有存在多个参数使用&连接时可能会出错。
+
+原文地址：http://www.cnblogs.com/davidwang456/p/4266867.html

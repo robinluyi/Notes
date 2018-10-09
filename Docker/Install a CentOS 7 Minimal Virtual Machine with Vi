@@ -1,0 +1,166 @@
+Install a CentOS 7 Minimal Virtual Machine with VirtualBox
+
+http://www.jeramysingleton.com/install-centos-7-minimal-in-virtualbox/
+
+Jeramy Singleton
+Jeramy Singleton
+
+For an upcoming project and blog article, I'm going to need a Linux setup on my main machine. The project requires me to use a minimal install of CentOS 7 (Linux) as the operating system. In order to run another operating system on my hardware I will use VirtualBox so that I can run CentOS alongside OS X.
+
+VirtualBox is a free and open source virtualization app that allows users to run multiple operating systems on their machine from within their main operating system. In other words, you can run a linux box (or whatever your favorite flavor of OS is) as if it were any other application inside your Windows OS, Mac OS X, or even on another Linux box. This is also known as running a Virtual Machine (VM).
+What is a Virtualization Application?
+
+Different operating systems have different processes for interacting with hardware. VirtualBox, and other virtualization apps, simulate hardware in a way that the virtualized operating system (the VM) thinks that it's running on real hardware. What VirtualBox is really doing underneath the hood is translating the VMs systems calls to calls that the main operating system can understand. VirtualBox sits between the two operating systems translating calls and responses between the two.
+Why would we want to run a Virtual Machine?
+
+One of the main reasons to run a VM is to gain access to technology and functionality that does not exist in the current operating system running on our hardware.
+
+For example, my operating system of choice is OS X, but if I want to do any serious Windows development I need to use Visual Studio. Microsoft hasn't released an OS X version of Visual Studio as of yet so to use the IDE I have to run Windows in a VM.
+
+Another example would be the need to run an ssh server like openssh-server, or a source control server like Gitolite. Yes, you can do both on OS X, but Linux or FreeBSD generally provides a better environment for server like functions.
+
+Virtual Machines give us the freedom of choice no matter what operating system sits on top of our hardware. There is also the added bonus of separating responsibilities. We can have different VMs running different types of servers with totally different setups. You could have a Rails app running in Apache on one VM, and another Rails app running in Nginx on another VM.
+Is there a disadvantage to virtualization?
+
+Virtual Machines can help us solve a lot of problems, but there are some fallbacks.
+
+One of the main fallbacks is the virtualization itself. Virtualbox has to spend extra time converting calls from one operating system to another, so there is inherently a loss in performance.
+
+Most machines, now days, have powerful, multi-core cpus and large amounts of RAM so this isn't really a big deal.
+Where can I get VirtualBox?
+
+At the time of writing this article the current version of VirtualBox was 5.0.4.
+
+VirtualBox can be downloaded by following this link: virtualbox.org
+Downloading CentOS 7
+
+I will be using the CentOS 7 Minimal ISO which is a 636MB download versus a 4GB download for the DVD ISO. The minimal install is exactly what it sounds like, minimal. It doesn't come with a windows manager or any development tools. It's a bare bones install that allows us to customize the environment to fit our exact needs.
+
+CentOS 7 can be found here: centos.org
+The Install
+
+I'm not going to walk you through the VirtualBox install because it's simple and straight forward. I will however, go through the steps of installing CentOS in VirtualBox.
+
+Once you have VirtualBox installed, open it up and click on the New icon on the top left of the toolbar.
+
+New Install
+
+Name your VM anything you want, but make sure you choose Linux as the type and Red Hat (64-bit) as the version.
+
+Naming your VM
+
+Next, choose the amount of memory you'd like to reserve for this VM. I usually just go with the suggested amount, which in this case is 768MB.
+
+Selecting Memory
+
+The next prompt will ask you to add a virtual hard disk. Go ahead and select Create a virtual hard disk now which should be the default.
+
+Selecting a virtual hard disk
+
+Next, you can select whichever type of VM hard disk type you'd like. I usually just select VDI.
+
+Select Hard Disk Type
+
+The next prompt will ask you if you'd like dynamic storage or fixed storage. Select dynamic. Dynamic storage means that VirtualBox will only use the amount of space, on your real hard drive, that the VM actually needs until it reaches the maximum we allot. This will also allow us to add more to the VM later if we need it.
+
+Storage Type
+
+The next step is to actually allot the amount of hard disk space for the VM. 8.00GB will be more than plenty to start off. Go ahead and press the Create button to finish up this part of the process.
+
+VM Space
+
+Now that we've setup the setup, it's time to install the VM. Your VirtualBox window should now contain a VM that is powered off.
+
+VirtualBox Manager
+
+Find your newly created VM space and double click on it to start it up. You'll be prompted to point the manager to the iso we downloaded earlier. Locate the file and click start.
+
+Pointing the VM to the ISO
+
+After you click start, VirtualBox will start the iso and you will be prompted to select an install mode. I usually just select Install CentOS 7, but it defaults to Test this media & install CentOS 7.
+
+Install Selection
+
+The install process will begin by asking you to select your language of preference. Once you've done that the next prompt will be to select the install destination.
+
+Install Destination
+
+Click on the Install Destination label and then immediately click Done at the top of the next window. Everything in this part of the install wizard has been set for us because of earlier selections we made when setting up the VM space.
+
+Clicking Done on the Install Destination
+
+You'll now notice that the Install Destination section no longer contains the warning that was previously there. Now you can click on Begin Install.
+
+Begin Install
+
+The install will begin, but there are still two more steps we need to take. The next window will give us the opportunity to set the root password and to add an additional account. Lets do both now.
+
+Configuration
+
+Select Root Password and create a new password for the root account.
+
+Root Password
+
+Add another account so that you can log in to the VM without directly logging into root. Go ahead and make the user an administrator.
+
+User Account
+
+Click on Finish configuration.
+
+Finish Configuration
+
+The installer will complete a few more things and then you'll see a message at the bottom that says Complete and will find a button to reboot the VM. Go ahead and click Reboot to startup the VM for the first time.
+
+Reboot
+
+Once the VM reboots you'll be able to log in.
+
+Log In
+Setting up ssh access on the VM
+
+There is a small oddity when installing CentOS when it comes to accessing the internet. When you first install the OS you may or may not be able to connect to the outside world, but after the first reboot you most certainly will not have a connection. This is due to the ONBOOT property in the ifcfg config file being set to no by default.
+
+If you type ip addr at the command-line you'll notice a lack of any other ip address other than 127.0.0.1.
+
+Change the working directory to /etc/sysconfig/network-scripts/ and edit the ifcfg-enp0s3 config file and set ONBOOT to yes. You may need to run vi as sudo if you aren't logged in as root (which is never recommended).
+
+ifcfg-enp0s3
+
+edit config
+
+After you reboot (via the reboot command) and the system comes back up type ip addr once again to view your VMs ip address.
+
+CentOS minimal comes with an ssh server so the last step needed to be able to ssh in from our local machine is to setup port forwarding on our VM.
+
+The status bar, on the bottom of the running vm, should have a bunch of icons. The one of interest to us is the network (double monitor) icon.
+
+Network Settings
+
+The dialog that opens shows the current configuration of the network adapter.
+
+Next press the Port Forwarding button to bring up the settings that will allow us to ssh into the VM.
+
+Port Forwarding Settings
+
+In the Port Forwarding dialog click on the green plus icon to add a new Rule. In this new rule enter information for Host IP, Host Port, Guest IP, and Guest Port.
+
+I use the following settings:
+
+    Host IP: 127.0.0.1 - this is the IP address (localhost) of the host operating system (not the VM). If you want to access the VM from anywhere on the internet you'll need to use your computers real IP.
+    Host Port: 2222 - use a port that is open on your machine.
+    Guest IP - this is the IP address shown when ip addr is typed in the VM command-line. In my case it has been 10.0.2.15 every time I have only one VM running.
+    Guest Port - 22 is the default ssh port and that's what we want to use here.
+
+Click the OK button to finalize the port forwarding settings.
+
+Now you should be able to ssh in from a local terminal.
+
+Local ssh
+Wrapping up
+
+We should now have a running, minimal version of CentOS 7 in VirtualBox. VirtualBox makes it extremely easy to run many different operating systems on existing hardware without having a separate machine for each different operating system we want to run.
+
+Having this setup will save some time for the next article where we'll go through installing Erlang and Elixir on our CentOS 7 VM.
+
+
+

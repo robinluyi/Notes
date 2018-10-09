@@ -1,0 +1,5 @@
+docker 高级命令
+
+docker images |grep none | awk -F '[ ;]+' '{print $3}' | xargs docker rmi
+
+docker images |grep sublime-docker | awk -F '[ ;]+' '{print $3}' | xargs docker rmi

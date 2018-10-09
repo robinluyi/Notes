@@ -1,0 +1,11 @@
+Alias
+
+alias mykill    'ps -u robin | grep /!:1 | awk' "'"'{print $1}'"'|xargs kill"
+如使用mykill java可以kill掉用户名为robin的所有java进程
+
+
+
+sudo -u wasuser /bin/tail -f /opt/IBM/WebSphere/AppServer/profiles/live/logs/server1/SystemOut.log | grep --line-buffer 1669995
+
+encryptMethod
+

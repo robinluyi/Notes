@@ -1,0 +1,12 @@
+Mac 快捷键
+
+全局
+contrl  上   ： 查看所有程序
+contrl  下   ： 查看当前程序所有窗口
+
+编辑器  
+command 上   ： 首行
+command 下   ： 末行
+
+Command+Shift+G  在finder中打开任意文件夹 包括隐藏文件夹
+Command+Shift+. 可以显示隐藏文件、文件夹，再按一次，恢复隐藏

@@ -1,0 +1,24 @@
+# This Docker creates a db2instance for orgstore
+#
+# Version: 2018-01-28
+# Author: Robin (yilubj@cn.ibm.com)
+# Made in China.
+
+FROM db2orgstore:v5
+
+LABEL maintainer="yilubj@cn.ibm.com" 
+
+ENV DEFAULT_INSTANCE_NAME=db2inst1\
+## Port number for Db2
+    PORT=50000
+
+
+USER ${INSTANCE_NAME}
+
+WORKDIR /home/${INSTANCE_NAME}
+
+RUN /home/db2inst1/sqllib/adm/db2start
+
+CMD tail -F /home/db2inst1/sqllib/db2dump/
+
+EXPOSE ${PORT}

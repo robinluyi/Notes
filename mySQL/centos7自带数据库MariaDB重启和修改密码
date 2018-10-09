@@ -1,0 +1,34 @@
+centos7自带数据库MariaDB重启和修改密码
+原创 2015年12月17日 15:07:08
+
+1：MariaDB和mysql差不多是mysql的一个分支，完全兼容mysql的命令。
+
+2：centos 7 中自带MariaDB， 需要在centos中安装mysql的时候就需要多注意了。
+
+3：启动 停止 重启 MariaDB
+
+      systemctl start mariadb.service #启动MariaDB
+      systemctl stop mariadb.service #停止MariaDB
+      systemctl restart mariadb.service #重启MariaDB
+      systemctl enable mariadb.service #设置开机启动
+      systemctl disable mariadb.service #设置开机不启动
+4：如果忘记了MariaDB root密码怎么办呢？
+    1. KILL掉系统里的MySQL进程；
+    2. 用以下命令启动MySQL，以不检查权限的方式启动；
+    mysqld_safe -skip-grant-tables &
+ 
+    或是
+    
+    修改/etc/my.cnf文件,在[mysqld]下添加 skip-grant-tables , 再启动mysql
+    3. 然后用空密码方式使用root用户登录 MySQL；
+    mysql -u root
+    4. 修改root用户的密码；
+    mysql> update mysql.user set password=PASSWORD（'新密码'） where User='root'
+    mysql> flush privileges；
+    mysql> quit
+    5. 重新启动MySQL，就可以使用新密码登录了。
+    6. 改完密码别忘记删除配置文件中的 skip-grant-tables
+5：普通修改MariaDB的密码，则和上一步一样，不用修改配置文件，登录MySQL 就行
+6:普通重启mysql和启动mysql
+   启动： /usr/local/mysql/bin/mysqld_safe -user=mysql &
+   停止：/usr/local/mysql/bin/mysqladmin -uroot -p shutdown
