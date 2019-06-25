@@ -1,0 +1,257 @@
+ Review Question 1 (1/1 point)
+
+What is the result of the following operation in Python:
+
+3 + 2 * 2
+10
+7 <code>7</code> - correct
+9
+12
+You have used 1 of 2 submissions
+Review Question 2 (1/1 point)
+
+In Python, if you executed name = 'Lizz', what would be the output of print(name[0:2])?
+Lizz
+L
+Liz
+Li <code>Li</code> - correct
+You have used 1 of 2 submissions
+Review Question 3 (1/1 point)
+
+In Python, if you executed var = '01234567', what would be the result of print(var[::2])?
+0246 <code>0246</code> - correct
+1357
+1234567
+8903
+You have used 2 of 2 submissions
+Review Question 4 (1/1 point)
+
+In Python, what is the result of the following operation '1'+'2'
+'2'
+'3'
+'12' <code>'12'</code> - correct
+3
+You have used 1 of 2 submissions
+Review Question 5 (1/1 point)
+
+Given myvar = 'hello', how would you convert myvar into uppercase?
+len(myvar)
+myvar.find('hello')
+myvar.upper() <code>myvar.upper()</code> - correct
+myvar.sum()
+You have used 1 of 2 submissions 
+
+
+ Question 1 (1/1 point)
+
+What is the syntax to obtain the first element of the tuple:
+
+A=('a','b','c')
+A[1]
+A[0] A[0] - correct
+A[:]
+You have used 1 of 2 submissions
+Question 2 (1/1 point)
+
+After applying the following method,L.append(['a','b']), the following list will only be one element longer.
+True True - correct
+False
+You have used 1 of 1 submissions
+Question 3 (1/1 point)
+
+How many duplicate elements can you have in a set?
+1
+0, you can only have one unique element in a set 0, you can only have one unique element in a set - correct
+100
+depends on the number of elements in your set.
+You have used 1 of 2 submissions
+Question 4 (1/1 point)
+
+>>>>Consider the following Python Dictionary:
+
+Dict={"A":1,"B":"2","C":[3,3,3],"D":(4,4,4),'E':5,'F':6}
+
+, what is the result of the following operation: Dict["D"]
+4
+3
+[3,3,3]
+(4, 4, 4) (4, 4, 4) - correct
+error
+You have used 1 of 2 submissions
+Question 5 (1/1 point)
+
+What is an important difference between lists and tuples?
+Lists can't contain a string
+Tuples can only have integers
+Lists and tuples are the same.
+Lists are mutable tuples are not Lists are mutable tuples are not - correct
+There is no zeros in lists
+You have used 1 of 2 submissions 
+
+ Question 1 (1/1 point)
+
+What is the output of the following lines of code:
+
+x=1
+
+if(x!=1):
+
+print('Hello')
+
+else:
+
+print('Hi')
+
+print('Mike')
+Hi Mike Hi Mike - correct
+Mike
+Hello Mike
+The Mike
+You have used 1 of 2 submissions
+Question 2 (1/1 point)
+
+What is the output of the following few lines of code ?
+
+A=['1','2','3']
+
+for a in A:
+
+print(2*a)
+2 4 6
+'2' '4' '6'
+'11' '22' '33' '11' '22' '33' - correct
+A B C
+You have used 1 of 2 submissions
+Question 3 (1/1 point)
+
+Consider the function Delta, when will the function return a value of 1
+
+def Delta(x):
+
+if x==0:
+
+y=1;
+
+else:
+
+y=0;
+
+return(y)
+When the input is anything but 0
+When the input in 1
+Never
+When the input is 0 When the input is 0 - correct
+You have used 1 of 2 submissions
+Question 4 (1/1 point)
+
+What is the correct way to sort the list 'B' using a method, the result should not return a new list, just change the list 'B'.
+B.sort() B.sort() - correct
+sort(B)
+sorted(B)
+B.sorted()
+You have used 1 of 2 submissions
+Question 5 (1/1 point)
+
+what are the keys of the of the following {'a':1,'b':2}
+1,2
+;,:
+a,b a,b - correct
+You have used 1 of 2 submissions 
+
+ Question 1 (1/1 point)
+
+What do the following lines of code do?
+
+with open("Example1.txt","r") as file1:
+
+FileContent=file1.readlines()
+
+print(FileContent)
+
+Read the file "Example1.txt" Read the file "Example1.txt" - correct
+Write to the file “Example1.txt”
+Append the file "Example1.txt"
+You have used 1 of 2 submissions
+Question 2 (1/1 point)
+
+What do the following lines of code do?
+
+with open("Example2.txt","w") as writefile:
+
+writefile.write("This is line A\n")
+
+writefile.write("This is line B\n")
+
+Read the file "Example2.txt"
+Write to the file “Example2.txt” Write to the file “Example2.txt” - correct
+Append the file "Example2.txt"
+You have used 1 of 1 submissions
+Question 3 (1/1 point)
+
+What do the following lines of code do?
+
+with open("Example3.txt","a") as file1:
+
+file1.write("This is line C\n")
+
+Read the file "Example3.txt"
+Write to the file “Example3.txt”
+Append the file "Example3.txt" Append the file "Example3.txt" - correct
+You have used 1 of 2 submissions
+Question 4 (1/1 point)
+
+What is the result of applying the following method df.head(), to the dataframe df
+prints the first row of the dataframe
+prints the first column of the dataframe
+prints the first 5 rows of the dataframe prints the first 5 rows of the dataframe - correct
+prints the dateframe out
+You have used 1 of 2 submissions 
+
+
+Multiple Choice (1/1 point)
+
+what is the result of the following lines of code:
+
+a=np.array([0,1,0,1,0])
+
+b=np.array([1,0,1,0,1])
+
+a*b
+0
+array([1, 1, 1, 1, 1])
+array([0, 0, 0, 0, 0]) array([0, 0, 0, 0, 0]) - correct
+You have used 2 of 2 submissions
+Multiple Choice (1/1 point)
+
+what is the result of the following lines of code:
+
+a=np.array([0,1])
+
+b=np.array([1,0])
+
+np.dot(a,b)
+1
+array([1,1])
+0 0 - correct
+array([0,0])
+You have used 1 of 2 submissions
+Multiple Choice (1/1 point)
+
+what is the result of the following lines of code:
+
+a=np.array([1,1,1,1,1])
+
+a+10
+array([10,10,10,10,10])
+array([11, 11, 11, 11, 11]) array([11, 11, 11, 11, 11]) - correct
+array([1,1,1,1,1])
+You have used 1 of 2 submissions
+Multiple Choice (1/1 point)
+
+what is the correct code to perform matrix multiplication on the matrix A and B
+np.dot(A,B) np.dot(A,B) - correct
+A*B
+AxB
+You have used 2 of 2 submissions
+
+

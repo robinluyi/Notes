@@ -1,0 +1,35 @@
+Data Security 
+
+
+    Explain the importance of giving the right people access to the right data.
+    List the four levels at which you can control data access.
+    Describe a typical scenario for limiting data access at each of the four levels.
+
+    Organization
+	Objects
+	Fields
+	Records
+
+
+
+    Organization-wide 
+    Role 
+    Sharing rules 
+    Manual sharing 
+
+
+
+    A user’s profile determines the objects they can access and the things they can do with any object record (such as create, read, edit, or delete).
+    Permission sets grant additional permissions and access settings to a user.
+
+sharing model
+
+	Private
+	    Only the record owner, and users above that role in the hierarchy, can view, edit, and report on those records. 
+	Public Read Only
+
+	    All users can view and report on records, but only the owner, and users above that role in the hierarchy, can edit them.
+	Public Read/Write
+	    All users can view, edit, and report on all records. 
+	Controlled by Parent
+	    A user can view, edit, or delete a record if she can perform that same action on the record it belongs to. 

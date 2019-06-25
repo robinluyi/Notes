@@ -148,6 +148,27 @@ git revert f67024f9df95bb8fb01228ce596e7c33ccef1753 -m 1
 	如果使用git revert HEAD~1 -m 1命令，也就是5f576a9，使用-m 2会revert第二个commit，也就是62db4af。
 
 
+11.  切换远程分支
+
+	如果本地有对应远程分支
+		git branch  branch_nama
+	如果本地没有对应远程分支
+
+		git fetch origin
+		git checkout -t origin/BP
+
+		切换分支 git checkout branch_name
+
+12. 删除远程分支
+        git push <remote_name> --delete <branch_name>
+13. 删除本地分支
+        git branch -d branch_name
+        git branch -D branch_name
+        
+        The -d option stands for --delete, which would delete the local branch, only if you have already pushed and merged it with your remote branches.
+        The -D option stands for --delete --force, which deletes the branch regardless of its push and merge status, so be careful using this one!
+
+
 
 
 配置文件
@@ -163,3 +184,7 @@ using sublime
 Ctrl + Shift + P 调起命令面板，输入 ga，选择 Git::Add Current File，将 README.md 文件提交至暂存区JavaScript
 Ctrl + Shift + P 调起命令面板，输入 gc，选择 Git::Commit，将 README.md 文件提交至版本库，这时会弹出提交日志的文件，首行输入此次更新的内容和目的，关闭该文件即可
 Ctrl + Shift + P 调起命令面板，输入 gp，选择 Git::Push
+
+修改.gitignore使之生效
+清楚tracked缓存
+git rm -r --cached .
