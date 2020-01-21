@@ -15,5 +15,8 @@ https://www.youracclaim.com/badges/61ad1b53-806f-4d7c-acc3-e3a1420d3218
 IBM Cloudant Indexes and Queries 
 https://www.youracclaim.com/go/Mi6OYqfk5mwYJS31d786IA
 
+IBM Cloudant Managed
+https://www.youracclaim.com/go/igBeRLnG7itP0PKL5sYQPA
+
 Docker Essentials
 https://courses.cognitiveclass.ai/certificates/f6f13a5f99064adaa5508ef7c5384034
