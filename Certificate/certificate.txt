@@ -4,3 +4,10 @@ https://courses.cognitiveclass.ai/certificates/c1ac06d722b94173b7b9a47e91b364a0
 Introduction to Data Science
 https://courses.cognitiveclass.ai/certificates/0d87cf838b944644acf4a72bab0a2dc0
 
+
+NoSQL and DBaaS 101
+https://courses.cognitiveclass.ai/certificates/0d9059dc8b06499eaa35f33366169cb4
+
+
+Docker Essentials
+https://courses.cognitiveclass.ai/certificates/f6f13a5f99064adaa5508ef7c5384034
