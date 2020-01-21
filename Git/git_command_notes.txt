@@ -188,3 +188,7 @@ Ctrl + Shift + P 调起命令面板，输入 gp，选择 Git::Push
 修改.gitignore使之生效
 清楚tracked缓存
 git rm -r --cached .
+
+
+挑选commit
+git cherry-pick 
