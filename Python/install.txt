@@ -1,0 +1,7 @@
+# For CentOS 7 Python 2.7
+
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+pip -v
+
+pip install -r requirements.txt

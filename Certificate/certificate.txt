@@ -11,3 +11,6 @@ https://courses.cognitiveclass.ai/certificates/0d9059dc8b06499eaa35f33366169cb4
 
 Docker Essentials
 https://courses.cognitiveclass.ai/certificates/f6f13a5f99064adaa5508ef7c5384034
+
+R 101
+https://courses.cognitiveclass.ai/certificates/f26d496a67ab4866b9553b299362f377

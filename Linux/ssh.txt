@@ -1,0 +1,27 @@
+ssh setup
+
+# generate a rsa key
+
+ssh-keygen -t rsa -b 4096 -C "yilubj@cn.ibm.com"
+# add rsa key to agent
+eval "$(ssh-agent -s)"
+ssh-add -K ~/.ssh/id_rsa
+# copy public key to server:
+	#if you use mac
+ 	brew install ssh-copy-id   
+ ssh-copy-id -i ~/.ssh/id_res.pub root@liangyue-11.fyre.ibm.com
+ 
+# use key to log server:
+ ssh 'root@liangyue-11.fyre.ibm.com'
+ 
+# add to ~/.ssh/config file 
+ Host fyre1
+     HostName liangyue-11.fyre.ibm.com
+     Port 22
+     User root
+     IdentityFile ~/.ssh/id_rsa
+
+     
+# use config to login
+
+ssh fyre1

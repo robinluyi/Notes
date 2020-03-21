@@ -1,0 +1,13 @@
+Git install
+
+# CentOS 
+yum install git
+
+# generate a rsa key
+	ssh-keygen -t rsa -b 4096 -C "yilubj@cn.ibm.com"
+# add rsa key to agent
+	eval "$(ssh-agent -s)"
+	ssh-add -K ~/.ssh/id_rsa
+# check public key
+	cat cat id_rsa.pub
+# add pub key to github account
