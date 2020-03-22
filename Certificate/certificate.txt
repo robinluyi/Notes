@@ -14,3 +14,7 @@ https://courses.cognitiveclass.ai/certificates/f6f13a5f99064adaa5508ef7c5384034
 
 R 101
 https://courses.cognitiveclass.ai/certificates/f26d496a67ab4866b9553b299362f377
+
+Data Visualization with R
+https://courses.cognitiveclass.ai/certificates/d8789139da2c41fdae7882a65c0cde0e
+
